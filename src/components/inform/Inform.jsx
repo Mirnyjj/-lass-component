@@ -1,16 +1,27 @@
-import { useSelector } from 'react-redux';
-import './inform.css'
-import { selectDraw, selectIsVictory, selectPlayer } from '../../selectors';
+import { connect } from 'react-redux';
+// import './inform.css'
+import { Component } from 'react';
 
-export const Inform = () => {
-    const draw = useSelector(selectDraw);
-    const isVictory = useSelector(selectIsVictory);
-    const player = useSelector(selectPlayer);
-    const state = isVictory ? `Выиграл ${player}` : draw ? 'Ничья' : `Сейчас ходит ${player}`
-    return <InformLoyout state={state} />
+class InformConteiner extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return <h1>
+                {this.props.isVictory ? `Выиграл ${this.props.player}` : this.props.draw ? 'Ничья' : `Сейчас ходит ${this.props.player}`}
+                </h1>
+
+    }
 }
-// eslint-disable-next-line react/prop-types
-const InformLoyout = ({ state }) => {
-    return <h1>{state}</h1>
-}
+
+const mapStateToProps = (state) => {
+    return {
+        draw: state.draw,
+        isVictory: state.isVictory,
+        player: state.player,
+    }
+
+};
+
+export const Inform = connect(mapStateToProps)(InformConteiner)
 

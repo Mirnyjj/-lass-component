@@ -1,14 +1,17 @@
-import './App.css';
+import { Component } from 'react';
 import { AppLayout } from './AppLayout';
 
-function App() {
+class OldApp extends Component {
 
-  return (
+  render() {
+    return (
     <>
       <AppLayout />
     </>
-  )
+    );
+  } 
 
 }
 
-export default App
+export default OldApp
+

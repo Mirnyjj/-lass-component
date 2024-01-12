@@ -1,49 +1,60 @@
-import { useDispatch, useSelector} from "react-redux";
+import { connect } from "react-redux";
 import { check, winCheck } from "../../utils/winningСheck";
-import './board.css'
-import { selectButtonState, selectDraw, selectIsVictory, selectPlayer} from "../../selectors/index";
-export const BoardLayout = () => {
-    const dispatch = useDispatch();
-    const buttonState = useSelector(selectButtonState);
-    const draw = useSelector(selectDraw);
-    const isVictory = useSelector(selectIsVictory);
-    const player = useSelector(selectPlayer);
+// import './board.css'
+import { Component } from "react";
+class BoardLayoutConteiner extends Component {
+    constructor(props) {
+        super(props)
+    }
 
-    const clickButton = (el) => {
-    
-        if (draw || isVictory) return;
+    clickButton(el) {
 
-        const newArrButton = buttonState.map((mean, ind) => el === ind ? player : mean);
-        dispatch({ type: 'BUTTON_STATE', payload: newArrButton })
+        if (this.props.draw || this.props.isVictory) return;
 
-        if (winCheck(newArrButton, player)) {
-            dispatch({ type: 'CHECKING_FOR_WINNINGS', payload: true })
+        const newArrButton = this.props.buttonState.map((mean, ind) => el === ind ? this.props.player : mean);
+        this.props.dispatch({ type: 'BUTTON_STATE', payload: newArrButton })
+
+        if (winCheck(newArrButton, this.props.player)) {
+            this.props.dispatch({ type: 'CHECKING_FOR_WINNINGS', payload: true })
             return
         }
 
         if (check(newArrButton)) {
-            dispatch({ type: 'CHECKING_FOR_A_DRAW', payload: true })
+            this.props.dispatch({ type: 'CHECKING_FOR_A_DRAW', payload: true })
             return
         }
 
-        if (player === 'X') {
-            dispatch({ type: 'PLAYER_CHANGE', payload: '0' })
+        if (this.props.player === 'X') {
+            this.props.dispatch({ type: 'PLAYER_CHANGE', payload: '0' })
         } else {
-            dispatch({ type: 'PLAYER_CHANGE', payload: 'X' })
+            this.props.dispatch({ type: 'PLAYER_CHANGE', payload: 'X' })
 
         }
-    console.log(buttonState)
+        console.log(this.props)
     };
-    console.log(buttonState)
-    return (
-        <div className="header">
-            {buttonState.map((elem, index) => (
-                <button className="cell" onClick={() => clickButton(index)} key={index}>
+    render() {
+         return (
+            <div className="header">
+                {this.props.buttonState.map((elem, index) => (
+                    <button className="cell" onClick={() => this.clickButton(index)} key={index}>
                     {elem}
-                </button>))}
-        </div>
-    )
+                    </button>))}
+            </div>
+         )
+       
+    }
+   
 }
+const mapStateToProps = (state) => {
+    return {
+        draw: state.draw,
+        isVictory: state.isVictory,
+        player: state.player,
+        buttonState: state.buttonState
 
+    }
 
+};
+
+export const BoardLayout = connect(mapStateToProps)(BoardLayoutConteiner)
 

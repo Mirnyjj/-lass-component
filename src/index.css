@@ -1,8 +1,64 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .StyleButton {
+    margin-top: 20px;
+    border-radius: 20px;
+    border: 3px solid aqua;
+    background-color: #d66695;
+    color: aliceblue;
+    font-size: 40px;
+    padding: 5px;
+    margin-left: calc(50% / 2);
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+  }
+  
+  .StyleButton:hover {
+  background-color: #4CAF50;
+  color: white;
+  }
+}
+
+@layer components {
+  .header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  
+    border-radius: 40px;
+  }
+  .cell {
+      align-self: center;
+      text-align: center;
+      color: aqua;
+      font-size: 140px;
+      border: solid aqua;
+      border-radius: 40px;
+      background-color: #412b33;
+      width: 200px;
+      height: 200px;
+      box-shadow: inset 10px 10px 100px rgb(123, 187, 224);
+    }
+    .cell::before {
+    border: 3px dotted #3a7999;
+    color: #3a7999;
+    background: rgba(0,0,0,0);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Edu TAS Beginner', cursive;
+    }
+
+}
+
+
 * {
-  box-sizing: border-box;
-  color: #232627;
   font-family: "Open Sans", sans-serif;
 }
 
